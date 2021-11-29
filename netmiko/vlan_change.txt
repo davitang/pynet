@@ -1,0 +1,10 @@
+vlan 101
+name WiredUser
+vlan 102
+name Wireless
+vlan 103
+name Vision
+vlan 104
+name Security
+vlan 105
+name NetworkAdmin
