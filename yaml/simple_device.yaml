@@ -1,0 +1,9 @@
+hostname: cisco4.lasthop.io
+vendor: cisco
+platform: csr1000v
+role: wan-r
+region: SJC
+management_ip: 10.1.1.1
+interface:
+- {type: loopback, name: Loopback0, description: management, ip_address: 10.1.1.1}
+- {type: physical, name: Ethernet1, description: ISP1, ip_address: 34.1.2.2, access_group: From_ISP1, service_policy: Policer_to_WAN}
