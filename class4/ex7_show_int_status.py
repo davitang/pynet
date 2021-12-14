@@ -19,16 +19,18 @@ print("\nOutput Data: ")
 pprint(data)
 print()
 
-#Convert Data to a List of Dict
-data_new_format = []
-for entry in data:
-    data_new_format.append({re_table.header[0]: entry[0],
-                            re_table.header[1]: entry[1],
-                            re_table.header[2]: entry[2],
-                            re_table.header[3]: entry[3],
-                            re_table.header[4]: entry[4],
-                            re_table.header[5]: entry[5],
-                                                        
-})
+#Convert the Data to Table Dict
 
+def table_converter(header_row, data):
+    col_len = len(header_row)
+    output = []
+    for entry in data:
+        new_row = {}
+        for i in range(col_len):
+            new_row[header_row[i]] = entry[i]
+        output.append(new_row)
+    return output
+
+data_new_format = table_converter(re_table.header, data)
 pprint(data_new_format)
+    
