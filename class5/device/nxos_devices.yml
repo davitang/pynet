@@ -1,0 +1,22 @@
+---
+nxos1:
+ interface_name: Ethernet1/1
+ ip_addr: 10.1.100.1
+ prefix_len: 24
+ bgp:
+  local_as: 22
+  peer1:
+   ip: 10.1.100.2
+   as: 22
+
+nxos2:
+ interface_name: Ethernet1/1
+ ip_addr: 10.1.100.2
+ prefix_len: 24
+ bgp:
+  local_as: 22
+  peer1:
+   ip: 10.1.100.1
+   as: 22
+
+ 

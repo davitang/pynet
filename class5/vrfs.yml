@@ -1,0 +1,30 @@
+---
+vrf1:
+ VRF_NAME: blue
+ VRF_RD: '100:1'
+ AF_IPV4: true
+ AF_IPV6: true
+
+vrf2:
+ VRF_NAME: red
+ VRF_RD: '200:1'
+ AF_IPV4: true
+ AF_IPV6: false
+
+vrf3:
+ VRF_NAME: yellow
+ VRF_RD: '300:1'
+ AF_IPV4: false
+ AF_IPV6: true
+
+vrf4:
+ VRF_NAME: green
+ VRF_RD: '400:1'
+ AF_IPV4: true
+ AF_IPV6: true
+
+vrf5:
+ VRF_NAME: grey
+ VRF_RD: '500:1'
+ AF_IPV4: false
+ AF_IPV6: false

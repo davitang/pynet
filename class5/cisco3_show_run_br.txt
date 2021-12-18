@@ -1,0 +1,267 @@
+version 16.12
+service timestamps debug datetime msec
+service timestamps log datetime msec
+service call-home
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+!
+hostname cisco3
+!
+boot-start-marker
+boot system flash c1100-universalk9_ias.16.12.03.SPA.bin
+boot-end-marker
+!
+!
+logging buffered 10000
+no logging console
+enable secret 9 $14$CVrv$7vnZ7GejAAOq0k$KAuOFmHdpnAlqniUCSGXE2Q1p88oY5etEEt7/pyuFoM
+!
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local if-authenticated
+!
+!
+!
+!
+!
+!
+aaa session-id common
+clock timezone PST -8 0
+clock summer-time PDT recurring
+call-home
+ ! If contact email address in call-home is configured as sch-smart-licensing@cisco.com
+ ! the email address configured in Cisco Smart License Portal will be used as contact email address to send SCH notifications.
+ contact-email-addr sch-smart-licensing@cisco.com
+ profile "CiscoTAC-1"
+  active
+  destination transport-method http
+  no destination transport-method email
+!
+ip name-server 1.1.1.1 1.0.0.1
+!
+!
+!
+login on-success log
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+multilink bundle-name authenticated
+!
+!
+!
+crypto pki trustpoint TP-self-signed-2174981821
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2174981821
+ revocation-check none
+ rsakeypair TP-self-signed-2174981821
+!
+crypto pki trustpoint SLA-TrustPoint
+ enrollment terminal
+ revocation-check crl
+!
+!
+crypto pki certificate chain TP-self-signed-2174981821
+ certificate self-signed 01
+crypto pki certificate chain SLA-TrustPoint
+ certificate ca 01
+!
+crypto pki certificate pool
+ ! ('certificate ca' cmd has been deprecated. Downloaded
+ !  Trustpool certificates should be re-downloaded
+ !  using 'crypro pki trustpool import url <url>')
+!
+!
+license udi pid C1111-4P sn FGL222290LB
+archive
+ path flash:cisco3-cfg
+memory free low-watermark processor 70550
+!
+diagnostic bootup level minimal
+!
+spanning-tree extend system-id
+!
+username test9 secret 9 $14$CQCe$BH8r2UDyqe4c0E$ZopYCeTcpUUTChQQfzUaRwwkIDoybRKRUX/YR6MLXmg
+username student1 privilege 15 secret 9 $14$/gYV$ZpT.4lxPBfovOU$wtTtaGoxBdSc99Y/OEaTG4Ip.C8pYeoHnKELzuzsSNM
+username pyclass privilege 15 secret 9 $14$7t3j$LAuRnQPxL6Cv/U$fglWbgZRQp36OZnviYeiPpEsw3W6UbVn2NLI0QToSys
+username testuser privilege 15 secret 9 $14$A5eB$WmK3IaiKxeBqtk$/q6ZFevkX4VEXQyscbovS8Kcz8ZGUWdLX6IjSGbsFh2
+!
+redundancy
+ mode none
+!
+!
+vlan internal allocation policy ascending
+!
+lldp run
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0/0
+ ip address 10.220.88.22 255.255.255.0
+ negotiation auto
+!
+interface GigabitEthernet0/0/1
+ no ip address
+ shutdown
+ media-type rj45
+ negotiation auto
+!
+interface GigabitEthernet0/1/0
+!
+interface GigabitEthernet0/1/1
+!
+interface GigabitEthernet0/1/2
+!
+interface GigabitEthernet0/1/3
+!
+interface Vlan1
+ no ip address
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+ip route 0.0.0.0 0.0.0.0 10.220.88.1
+ip ssh version 2
+ip ssh pubkey-chain
+  username testuser
+   key-hash ssh-rsa E5D7E26A603DD18923113E45F29BDF22
+  username student1
+   key-hash ssh-rsa 1C3A949CF3B48F23F5074717EEEE025A
+ip scp server enable
+!
+!
+ip access-list extended netmiko_test_large_acl
+ 10 permit ip host 192.168.0.1 any
+ 20 permit ip host 192.168.0.2 any
+ 30 permit ip host 192.168.0.3 any
+ 40 permit ip host 192.168.0.4 any
+ 50 permit ip host 192.168.0.5 any
+ 60 permit ip host 192.168.0.6 any
+ 70 permit ip host 192.168.0.7 any
+ 80 permit ip host 192.168.0.8 any
+ 90 permit ip host 192.168.0.9 any
+ 100 permit ip host 192.168.0.10 any
+ 110 permit ip host 192.168.0.11 any
+ 120 permit ip host 192.168.0.12 any
+ 130 permit ip host 192.168.0.13 any
+ 140 permit ip host 192.168.0.14 any
+ 150 permit ip host 192.168.0.15 any
+ 160 permit ip host 192.168.0.16 any
+ 170 permit ip host 192.168.0.17 any
+ 180 permit ip host 192.168.0.18 any
+ 190 permit ip host 192.168.0.19 any
+ 200 permit ip host 192.168.0.20 any
+ 210 permit ip host 192.168.0.21 any
+ 220 permit ip host 192.168.0.22 any
+ 230 permit ip host 192.168.0.23 any
+ 240 permit ip host 192.168.0.24 any
+ 250 permit ip host 192.168.0.25 any
+ 260 permit ip host 192.168.0.26 any
+ 270 permit ip host 192.168.0.27 any
+ 280 permit ip host 192.168.0.28 any
+ 290 permit ip host 192.168.0.29 any
+ 300 permit ip host 192.168.0.30 any
+ 310 permit ip host 192.168.0.31 any
+ 320 permit ip host 192.168.0.32 any
+ 330 permit ip host 192.168.0.33 any
+ 340 permit ip host 192.168.0.34 any
+ 350 permit ip host 192.168.0.35 any
+ 360 permit ip host 192.168.0.36 any
+ 370 permit ip host 192.168.0.37 any
+ 380 permit ip host 192.168.0.38 any
+ 390 permit ip host 192.168.0.39 any
+ 400 permit ip host 192.168.0.40 any
+ 410 permit ip host 192.168.0.41 any
+ 420 permit ip host 192.168.0.42 any
+ 430 permit ip host 192.168.0.43 any
+ 440 permit ip host 192.168.0.44 any
+ 450 permit ip host 192.168.0.45 any
+ 460 permit ip host 192.168.0.46 any
+ 470 permit ip host 192.168.0.47 any
+ 480 permit ip host 192.168.0.48 any
+ 490 permit ip host 192.168.0.49 any
+ 500 permit ip host 192.168.0.50 any
+ 510 permit ip host 192.168.0.51 any
+ 520 permit ip host 192.168.0.52 any
+ 530 permit ip host 192.168.0.53 any
+ 540 permit ip host 192.168.0.54 any
+ 550 permit ip host 192.168.0.55 any
+ 560 permit ip host 192.168.0.56 any
+ 570 permit ip host 192.168.0.57 any
+ 580 permit ip host 192.168.0.58 any
+ 590 permit ip host 192.168.0.59 any
+ 600 permit ip host 192.168.0.60 any
+ 610 permit ip host 192.168.0.61 any
+ 620 permit ip host 192.168.0.62 any
+ 630 permit ip host 192.168.0.63 any
+ 640 permit ip host 192.168.0.64 any
+ 650 permit ip host 192.168.0.65 any
+ 660 permit ip host 192.168.0.66 any
+ 670 permit ip host 192.168.0.67 any
+ 680 permit ip host 192.168.0.68 any
+ 690 permit ip host 192.168.0.69 any
+ 700 permit ip host 192.168.0.70 any
+ 710 permit ip host 192.168.0.71 any
+ 720 permit ip host 192.168.0.72 any
+ 730 permit ip host 192.168.0.73 any
+ 740 permit ip host 192.168.0.74 any
+ 750 permit ip host 192.168.0.75 any
+ 760 permit ip host 192.168.0.76 any
+ 770 permit ip host 192.168.0.77 any
+ 780 permit ip host 192.168.0.78 any
+ 790 permit ip host 192.168.0.79 any
+ 800 permit ip host 192.168.0.80 any
+ 810 permit ip host 192.168.0.81 any
+ 820 permit ip host 192.168.0.82 any
+ 830 permit ip host 192.168.0.83 any
+ 840 permit ip host 192.168.0.84 any
+ 850 permit ip host 192.168.0.85 any
+ 860 permit ip host 192.168.0.86 any
+ 870 permit ip host 192.168.0.87 any
+ 880 permit ip host 192.168.0.88 any
+ 890 permit ip host 192.168.0.89 any
+ 900 permit ip host 192.168.0.90 any
+ 910 permit ip host 192.168.0.91 any
+ 920 permit ip host 192.168.0.92 any
+ 930 permit ip host 192.168.0.93 any
+ 940 permit ip host 192.168.0.94 any
+ 950 permit ip host 192.168.0.95 any
+ 960 permit ip host 192.168.0.96 any
+ 970 permit ip host 192.168.0.97 any
+ 980 permit ip host 192.168.0.98 any
+ 990 permit ip host 192.168.0.99 any
+ 1000 permit ip host 192.168.0.100 any
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ logging synchronous
+ transport input none
+ stopbits 1
+line vty 0 4
+ exec-timeout 20 0
+ transport input telnet ssh
+!
+ntp server 130.126.24.24
+ntp server 152.2.21.1
+!
+!
+!
+!
+!
+end
