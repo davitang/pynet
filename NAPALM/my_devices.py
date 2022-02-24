@@ -16,3 +16,10 @@ eos1 = dict(
     password=password,
 )
 
+nxos1 = dict(
+    hostname="nxos1.lasthop.io",
+    device_type="nxos",
+    username="pyclass",
+    password=password,
+    optional_args={"port":8443}
+)
